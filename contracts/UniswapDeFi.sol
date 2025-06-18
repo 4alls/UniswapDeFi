@@ -9,4 +9,9 @@ Link token: 0x326C977E6efc84E512bB9C30f76E30c160eD06FB
 Weth9: 0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6
 */
 
+interface IERC20 {
+    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
+    function approve(address spender, uint256 amount) external returns (bool);
+}
+
 

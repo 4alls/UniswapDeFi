@@ -32,4 +32,17 @@ interface ISwapRouter {
     function exactInputSingle(ExactInputSingleParams calldata params) external payable returns (uint256 amountOut);
 }
 
+contract UniswapDeFi {
+    ISwapRouter public immutable swapRouter;
+ 
+    address public constant WETH9 = 0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6;
+ 
+    // Pour cet exemple, on va prendre des frais de pool à 0.3%
+    uint24 public constant poolFee = 3000;
+ 
+    constructor(ISwapRouter _swapRouter) {
+        swapRouter = _swapRouter;
+    }
+}
+
 

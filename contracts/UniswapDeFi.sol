@@ -43,6 +43,31 @@ contract UniswapDeFi {
     constructor(ISwapRouter _swapRouter) {
         swapRouter = _swapRouter;
     }
+
+    function swapExactInputSingle(uint256 amountIn, address _token) external {
+ 
+        // Transfert des tokens en question au smart contract ! Il faut penser à approve ce transfert avant l’utilisation de cette fonction 
+        IERC20(_token).transferFrom(msg.sender, address(this), amountIn);
+ 
+        // autoriser uniswap à utiliser nos tokens
+        IERC20(_token).approve(address(swapRouter), amountIn);
+        
+        //Creation des paramètres pour l'appel du swap
+        ISwapRouter.ExactInputSingleParams memory params =
+            ISwapRouter.ExactInputSingleParams({
+                tokenIn: _token,
+                tokenOut: WETH9,
+                fee: poolFee,
+                recipient: msg.sender,
+                deadline: block.timestamp,
+                amountIn: amountIn,
+                amountOutMinimum: 0,
+                sqrtPriceLimitX96: 0
+            });
+ 
+        // effectue le swap, ETH sera transféré directement au msg.sender
+        swapRouter.exactInputSingle(params);
+    }
 }
 
 
